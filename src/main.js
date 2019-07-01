@@ -21,7 +21,7 @@ router.beforeEach((to, from, next) => {
     return
   }
   var name = store.state.info.name
-  if (name === null) {
+  if (name === '') {
     if (to.meta.requireAuth || to.name == null) {
       next({path: '/', query: {redirect: to.path}})
     } else {
