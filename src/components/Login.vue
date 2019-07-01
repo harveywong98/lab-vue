@@ -36,17 +36,20 @@ export default{
   methods: {
     submitClick: function () {
       var _this = this
+      console.log(_this)
       this.loading = true
-      var data = {
+      this.postRequest('/admins/login', {
         name: this.loginForm.username,
         password: this.loginForm.password
-      }
-      this.postRequest('/admins/login', data).then(resp => {
-        console.log(resp.data)
+      }).then(resp => {
         _this.loading = false
         if (resp && resp.status === 200) {
-          // var data = resp.data
-          // _this.$store.commit('login', data.obj)
+          var info = {
+            'token': resp.data.data,
+            'name': _this.loginForm.name
+          }
+          // console.log(info)
+          _this.$store.commit('login', info)
           var path = _this.$route.query.redirect
           _this.$router
             .replace({path: path === '/' || path === undefined ? '/home' : path})

@@ -6,8 +6,8 @@
         <div style="display: flex;align-items: center;margin-right: 7px">
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-<!--                {{user.name}}-->
-<!--                <i><img v-if="user.userface!=''" :src="user.userface" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>-->
+                {{info.name}}
+                <i><img src="@/assets/avatar.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="logout">注销</el-dropdown-item>
@@ -97,11 +97,9 @@ export default {
     }
   },
   computed: {
-    user () {
-      // return this.$store.state.user
-    },
-    routes () {
-      // return this.$store.state.routes
+    info () {
+      console.log('home中取到的' + this.$store.state.info)
+      return this.$store.state.info
     }
   }
 }
