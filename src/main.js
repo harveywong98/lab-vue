@@ -24,6 +24,7 @@ router.beforeEach((to, from, next) => {
   if (name === '') {
     if (to.meta.requireAuth || to.name == null) {
       next({path: '/', query: {redirect: to.path}})
+      // next()
     } else {
       next()
     }

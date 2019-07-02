@@ -10,7 +10,8 @@
                 <i><img src="@/assets/avatar.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="logout">注销</el-dropdown-item>
+              <el-dropdown-item >修改密码</el-dropdown-item>
+              <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -19,37 +20,52 @@
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <el-menu
+              router
               style="background: #ececec;width: 180px;"
-              default-active="2">
-              <el-submenu index="1">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>导航一</span>
-                </template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="1-1">选项1</el-menu-item>
-                  <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-              <el-menu-item index="2">
+              default-active="/news">
+              <el-menu-item index="/news">
                 <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
+                <span slot="title">新闻动态</span>
               </el-menu-item>
-              <el-menu-item index="3" disabled>
+              <el-menu-item index="/notices">
+                <i class="el-icon-menu"></i>
+                <span slot="title">公示公告</span>
+              </el-menu-item>
+              <el-menu-item index="/regulations">
                 <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
+                <span slot="title">规章制度</span>
               </el-menu-item>
-              <el-menu-item index="4">
+              <el-menu-item index="/cultivation">
                 <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
+                <span slot="title">学生培养</span>
+              </el-menu-item>
+              <el-menu-item index="/members">
+                <i class="el-icon-setting"></i>
+                <span slot="title">团队成员</span>
+              </el-menu-item>
+              <el-menu-item index="/activities">
+                <i class="el-icon-setting"></i>
+                <span slot="title">实验室风采</span>
+              </el-menu-item>
+              <el-menu-item index="/research">
+                <i class="el-icon-setting"></i>
+                <span slot="title">研究方向</span>
+              </el-menu-item>
+              <el-menu-item index="/project">
+                <i class="el-icon-setting"></i>
+                <span slot="title">科研项目</span>
+              </el-menu-item>
+              <el-menu-item index="/reward">
+                <i class="el-icon-setting"></i>
+                <span slot="title">获奖成果</span>
+              </el-menu-item>
+              <el-menu-item index="/patent">
+                <i class="el-icon-setting"></i>
+                <span slot="title">专利成果</span>
+              </el-menu-item>
+              <el-menu-item index="/thesis">
+                <i class="el-icon-setting"></i>
+                <span slot="title">论文巨著</span>
               </el-menu-item>
             </el-menu>
           </div>
@@ -98,7 +114,6 @@ export default {
   },
   computed: {
     info () {
-      console.log('home中取到的' + this.$store.state.info)
       return this.$store.state.info
     }
   }
