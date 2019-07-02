@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import {getRequest, postRequest, deleteRequest, putRequest} from './utils/api'
 
 Vue.config.productionTip = false
-Vue.use(ElementUI)
+Vue.use(ElementUI, { zIndex: 202 })
 Vue.prototype.getRequest = getRequest
 Vue.prototype.postRequest = postRequest
 Vue.prototype.deleteRequest = deleteRequest

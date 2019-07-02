@@ -1,11 +1,14 @@
 <template>
   <div>
     <el-dialog
+      append-to-body
       :title.sync=title
       :visible.sync="isShow"
       width="80%"
       :before-close="closeMyself">
-      <span>这是一段信息</span>
+      <div>
+        <tiny-m-c-e></tiny-m-c-e>
+      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="closeMyself">取 消</el-button>
     <el-button type="primary" @click="closeMyself">发 布</el-button>
@@ -15,8 +18,10 @@
 </template>
 
 <script>
+import TinyMCE from '@/components/TinyMCE'
 export default {
   name: 'PopUpDialog',
+  components: {TinyMCE},
   props: ['operation', 'module', 'isShow'],
   methods: {
     closeMyself () {

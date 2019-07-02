@@ -1,17 +1,11 @@
 <template>
   <div>
-    <editor id='tinymce' v-model='tinymceHtml' :init='init'></editor>
-    <div v-text='tinymceHtml' ></div>
-    <div>
-      <button @click="postData">点我将HTML保存到数据库</button>
-      <button @click="getOneData">点我从服务器获取数据</button>
-    </div>
+    <editor id='tinymce' v-model='tinymceHtml' :init='init' ></editor>
   </div>
 </template>
 
 <script>
-import base64 from 'js-base64'
-import {getOneNews as getonenews} from '../api/newsRequest'
+// import base64 from 'js-base64'
 import axios from 'axios'
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme'
@@ -28,7 +22,7 @@ export default {
   name: 'TinyMCE',
   data () {
     return {
-      tinymceHtml: '初始化',
+      tinymceHtml: '',
       init: {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
@@ -88,23 +82,24 @@ export default {
   },
   components: {
     'editor': Editor
-  },
-  methods: {
-    postData () {
-      this.$emit('postData', this.tinymceHtml)
-    },
-    getOneData () {
-      getonenews({
-        id: 11
-      }).then(response => {
-        // console.log(response.data.data.html)
-        let Base64 = base64.Base64
-        let html = Base64.decode(response.data.data.html)
-        console.log(html)
-        this.tinymceHtml = html
-      })
-    }
   }
+  // ,
+  // methods: {
+  //   postData () {
+  //     this.$emit('postData', this.tinymceHtml)
+  //   },
+  //   getOneData () {
+  //     getonenews({
+  //       id: 11
+  //     }).then(response => {
+  //       // console.log(response.data.data.html)
+  //       let Base64 = base64.Base64
+  //       let html = Base64.decode(response.data.data.html)
+  //       console.log(html)
+  //       this.tinymceHtml = html
+  //     })
+  //   }
+  // }
 }
 </script>
 
