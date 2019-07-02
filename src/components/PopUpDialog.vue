@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-dialog
-      append-to-body
       :title.sync=title
       :visible.sync="isShow"
       width="80%"

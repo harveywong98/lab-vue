@@ -3,7 +3,7 @@
     <el-row type="flex" justify="end">
       <el-col :span="2">
         <div class="grid-content bg-purple">
-          <el-button size="small" @click="handleClick($event)" button_type="发布">发布新新闻</el-button>
+          <el-button icon='el-icon-plus' size="small" @click="handleClick($event)" button_type="发布">发布新新闻</el-button>
         </div>
       </el-col>
     </el-row>
@@ -28,6 +28,11 @@
       <el-table-column
       label="操作"
       min-width="20%">
+        <template slot-scope="scope">
+          <el-link type="primary" icon="el-icon-edit" @click="showEditEmpView(scope.row)" size="mini">编辑</el-link>
+          &nbsp;&nbsp;
+          <el-link type="danger" icon="el-icon-delete" size="mini">删除</el-link>
+        </template>
     </el-table-column>
     </el-table>
     <pop-up-dialog :module="name" :operation="clicked_button_type" :is-show="isShowPublish" @on-close="closeDialog"></pop-up-dialog>
