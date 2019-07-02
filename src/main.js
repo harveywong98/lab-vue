@@ -6,14 +6,9 @@ import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
-import {getRequest, postRequest, deleteRequest, putRequest} from './utils/api'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { zIndex: 202 })
-Vue.prototype.getRequest = getRequest
-Vue.prototype.postRequest = postRequest
-Vue.prototype.deleteRequest = deleteRequest
-Vue.prototype.putRequest = putRequest
 
 router.beforeEach((to, from, next) => {
   if (to.name === 'Login') {
@@ -23,8 +18,8 @@ router.beforeEach((to, from, next) => {
   var name = store.state.info.name
   if (name === '') {
     if (to.meta.requireAuth || to.name == null) {
-      // next({path: '/', query: {redirect: to.path}})
-      next()
+      next({path: '/', query: {redirect: to.path}})
+      // next()
     } else {
       next()
     }

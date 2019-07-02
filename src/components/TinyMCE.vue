@@ -1,5 +1,15 @@
 <template>
   <div>
+    <el-input
+      type="text"
+      placeholder="请输入标题"
+      v-model="title"
+      maxlength="30"
+      show-word-limit
+    >
+    </el-input>
+    <br/>
+    <br/>
     <editor id='tinymce' v-model='tinymceHtml' :init='init' ></editor>
   </div>
 </template>
@@ -22,6 +32,7 @@ export default {
   name: 'TinyMCE',
   data () {
     return {
+      title: '',
       tinymceHtml: '',
       init: {
         language_url: '/static/tinymce/zh_CN.js',

@@ -18,6 +18,7 @@
   </el-form>
 </template>
 <script>
+import login from '@/api/login'
 export default{
   data () {
     return {
@@ -36,9 +37,12 @@ export default{
   methods: {
     submitClick: function () {
       var _this = this
-      console.log(_this)
       this.loading = true
-      this.postRequest('/admins/login', {
+      // this.postRequest('/admins/login', {
+      //   name: this.loginForm.username,
+      //   password: this.loginForm.password
+      // })
+      login({
         name: this.loginForm.username,
         password: this.loginForm.password
       }).then(resp => {
@@ -48,7 +52,6 @@ export default{
             'token': resp.data.data,
             'name': _this.loginForm.name
           }
-          // console.log(info)
           _this.$store.commit('login', info)
           var path = _this.$route.query.redirect
           _this.$router

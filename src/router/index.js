@@ -25,7 +25,7 @@ export default new Router({
       hidden: true
     }, {
       path: '/home',
-      name: 'Home',
+      name: '首页',
       component: Home,
       hidden: true,
       meta: {
