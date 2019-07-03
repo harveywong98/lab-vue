@@ -28,6 +28,7 @@ export default new Router({
       name: '首页',
       component: Home,
       hidden: true,
+      redirect: '/news',
       meta: {
         requireAuth: true
       },

@@ -38,8 +38,8 @@ export default {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
         skin_url: '/static/tinymce/skins/ui/oxide',
-        height: 300,
-        plugins: 'preview lists image media table wordcount',
+        height: 750,
+        plugins: 'preview lists image media table wordcount autoresize',
         content_style: `
             *                         { padding:0; margin:0; }
             html, body                { height:100%; }

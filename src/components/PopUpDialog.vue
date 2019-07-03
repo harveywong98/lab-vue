@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-dialog
+      fullscreen
       :title.sync=title
       :visible.sync="isShow"
       width="80%"
