@@ -37,3 +37,11 @@ export function updateOneNews (data) {
     data: data
   })
 }
+
+export function queryByPage (params) {
+  return request({
+    url: '/news/list',
+    method: 'get',
+    params: params
+  })
+}

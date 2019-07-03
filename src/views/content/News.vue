@@ -9,7 +9,7 @@
     </el-row>
     <el-table
       stripe
-      :data="tableData"
+      :data="resultData"
       style="width: 100%">
       <el-table-column
         prop="date"
@@ -36,6 +36,15 @@
         </template>
     </el-table-column>
     </el-table>
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :current-page.sync="page.currentPage"
+      @current-change="currentChange"
+      @prev-click="prevClick"
+      @next-click="nextClick"
+      :page-count="page.pageNum">
+    </el-pagination>
     <pop-up-dialog
       v-if='isShowPublish'
       :getted_html="getted_html"
@@ -52,10 +61,8 @@
 <script>
 import base64 from 'js-base64'
 import PopUpDialog from '@/components/PopUpDialog'
-import {deleteOneNews, insertOneNews, queryAllNews, queryOne, updateOneNews} from '../../api/news'
-// import cleanField from '@/utils/cleanField'
+import {deleteOneNews, insertOneNews, queryByPage, queryOne, updateOneNews} from '../../api/news'
 import CleanWordHTML from '@/utils/MSWordHtmlCleaners'
-
 export default {
   name: 'News',
   components: {
@@ -63,10 +70,19 @@ export default {
   },
   data () {
     return {
+      page: {
+        prePage: 0,
+        nextPage: 0,
+        lastPage: 0,
+        pageNum: 0,
+        PAGE_SIZE: 2,
+        currentPage: 0
+      },
       name: '新闻动态',
       clicked_button_type: '',
       isShowPublish: false,
       tableData: [],
+      resultData: [], // 防止watch无限循环
       getted_html: '',
       getted_title: '',
       editing_id: 0
@@ -75,23 +91,26 @@ export default {
   watch: {
     tableData () {
       let Base64 = base64.Base64
-      let tempArr = this.tableData
-      this.tableData = tempArr.map(function (o) {
+      this.resultData = this.tableData.map(function (o) {
         let decodedContent = Base64.decode(o.content)
-        // o['content'] = cleanField(decodedContent).replace(/<\/?.+?>/g, '')
         o['content'] = CleanWordHTML(decodedContent).replace(/<\/?.+?>/g, '')
         return o
       })
-      console.log(this.tableData)
     }
   },
-  created: function () {
+  mounted: function () {
     this.initData()
   },
   methods: {
     initData () {
-      queryAllNews().then(resp => {
-        this.tableData = resp.data.data
+      queryByPage({
+        page: this.currentPage,
+        size: this.page.PAGE_SIZE
+      }).then(resp => {
+        this.tableData = resp.data.data.list
+        this.page.nextPage = resp.data.data.nextPage
+        this.page.prePage = resp.data.data.prePage
+        this.page.pageNum = resp.data.data.pages
       })
     },
     deleteOneById (id) {
@@ -136,17 +155,54 @@ export default {
         }).then(resp => {
           this.initData()
           this.isShowPublish = false
-          console.log(resp.data)
+          // console.log(resp.data)
         })
       } else if (this.clicked_button_type === '编辑') {
         updateOneNews({
           id: that.editing_id,
           title: title,
           content: encodedHtml
-        })
+        }).then(
+          this.initData(),
+          this.isShowPublish = false
+        )
       }
       this.getted_title = ''
       this.getted_html = ''
+    },
+    currentChange () {
+      queryByPage({
+        page: this.page.currentPage,
+        size: this.page.PAGE_SIZE
+      }).then(resp => {
+        this.tableData = resp.data.data.list
+        this.page.nextPage = resp.data.data.nextPage
+        this.page.prePage = resp.data.data.prePage
+        this.page.pageNum = resp.data.data.pages
+      })
+    },
+    prevClick () {
+      queryByPage({
+        page: this.page.prePage,
+        size: this.page.PAGE_SIZE
+      }).then(resp => {
+        this.tableData = resp.data.data.list
+        this.page.nextPage = resp.data.data.nextPage
+        this.page.prePage = resp.data.data.prePage
+        this.page.pageNum = resp.data.data.pages
+      })
+    },
+    nextClick () {
+      queryByPage({
+        page: this.page.nextPage,
+        size: this.page.PAGE_SIZE
+      }).then(resp => {
+        this.tableData = resp.data.data.list
+        this.page.nextPage = resp.data.data.nextPage
+        this.page.prePage = resp.data.data.prePage
+        this.page.pageNum = resp.data.data.pages
+        console.log(this.tableData)
+      })
     }
   }
 }
