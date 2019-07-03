@@ -10,12 +10,11 @@
     </el-input>
     <br/>
     <br/>
-    <editor id='tinymce' v-model='tinymceHtml' :init='init' ></editor>
+    <editor id='tinymce' v-model='tinymceHtml' :init='init'></editor>
   </div>
 </template>
 
 <script>
-// import base64 from 'js-base64'
 import axios from 'axios'
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme'
@@ -30,10 +29,11 @@ import 'tinymce/plugins/wordcount'
 
 export default {
   name: 'TinyMCE',
+  props: ['getted_html', 'getted_title'],
   data () {
     return {
-      title: '',
-      tinymceHtml: '',
+      title: this.getted_title,
+      tinymceHtml: this.getted_html,
       init: {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',

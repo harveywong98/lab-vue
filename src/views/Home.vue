@@ -7,7 +7,7 @@
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
                 {{info.name}}
-                <i><img src="@/assets/avatar.jpg" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
+                <i><img src="@/assets/avatar.png" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item >修改密码</el-dropdown-item>

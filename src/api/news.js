@@ -7,6 +7,15 @@ export function insertOneNews (data) {
     data: data
   })
 }
+
+export function queryOne (params) {
+  return request({
+    url: '/news/one',
+    method: 'get',
+    params: params
+  })
+}
+
 export function queryAllNews (data) {
   return request({
     url: '/news/all',
