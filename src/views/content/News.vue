@@ -39,8 +39,8 @@
         </template>
     </el-table-column>
     </el-table>
+    <br/>
     <el-pagination
-      background
       layout="prev, pager, next"
       :current-page.sync="page.currentPage"
       @current-change="currentChange"
