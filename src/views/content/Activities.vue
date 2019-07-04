@@ -1,20 +1,21 @@
 <template>
     <div>
-      <h3>编辑实验室风采</h3>
-      <tiny-m-c-e ref="input" :getted_html="getted_html"></tiny-m-c-e>
-      <br/>
-      <el-button type="primary">发布</el-button>
+      <h3>编辑{{requestInfo.name}}</h3>
+      <single-page-management :request_info="requestInfo"></single-page-management>
     </div>
 </template>
 
 <script>
-import TinyMCE from '@/components/TinyMCE'
+import SinglePageManagement from '@/components/SinglePageManagement'
 export default {
   name: 'Activities',
-  components: {TinyMCE},
+  components: {SinglePageManagement},
   data () {
     return {
-      getted_html: ''
+      requestInfo: {
+        type: 'lab_style',
+        name: '实验室风采'
+      }
     }
   }
 }

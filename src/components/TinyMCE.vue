@@ -1,6 +1,7 @@
 <template>
   <div>
     <editor id='tinymce' v-model='tinymceHtml' :init='init'></editor>
+<!--    <editor id='editorId' v-model='tinymceHtml' :init='init'></editor>-->
   </div>
 </template>
 
@@ -25,6 +26,7 @@ export default {
       title: this.getted_title,
       tinymceHtml: this.getted_html,
       init: {
+        selector: `#tinymce`,
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
         skin_url: '/static/tinymce/skins/ui/oxide',
