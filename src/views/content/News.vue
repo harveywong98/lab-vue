@@ -17,15 +17,16 @@
       <el-table-column
         prop="date"
         label="发布时间"
-        min-width="15%">
+        min-width="10%">
       </el-table-column>
       <el-table-column
       prop="title"
       label="标题"
-      min-width="15%">
+      min-width="20%">
     </el-table-column>
       <el-table-column
       prop="content"
+      :show-overflow-tooltip="styles.showOverflowTooltip"
       label="内容"
       min-width="60%">
     </el-table-column>
@@ -76,6 +77,9 @@ export default {
   },
   data () {
     return {
+      styles: {
+        showOverflowTooltip: true
+      },
       loading: false,
       page: {
         prePage: 0,
@@ -110,10 +114,12 @@ export default {
   },
   methods: {
     initData () {
+      this.loading = true
       queryByPage({
         page: this.currentPage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
@@ -125,6 +131,7 @@ export default {
       })
     },
     deleteOneById (id) {
+      this.loading = true
       deleteOneNews({
         id: id
       }).then(resp => {
@@ -134,8 +141,8 @@ export default {
         Message.error({
           message: '失败'
         })
-      }
-      )
+      })
+      this.loading = false
     },
     editOne (id, event) {
       this.clicked_button_type = event.currentTarget.getAttribute('button_type')
@@ -164,6 +171,7 @@ export default {
       this.getted_html = ''
     },
     sendRequest (title, content) {
+      this.loading = true
       var that = this
       let Base64 = base64.Base64
       let encodedHtml = Base64.encode(content)
@@ -196,8 +204,10 @@ export default {
       }
       this.getted_title = ''
       this.getted_html = ''
+      this.loading = false
     },
     currentChange () {
+      this.loading = true
       queryByPage({
         page: this.page.currentPage,
         size: this.page.PAGE_SIZE
@@ -211,8 +221,10 @@ export default {
           message: '失败'
         })
       })
+      this.loading = false
     },
     prevClick () {
+      this.loading = true
       queryByPage({
         page: this.page.prePage,
         size: this.page.PAGE_SIZE
@@ -226,8 +238,10 @@ export default {
           message: '失败'
         })
       })
+      this.loading = false
     },
     nextClick () {
+      this.loading = true
       queryByPage({
         page: this.page.nextPage,
         size: this.page.PAGE_SIZE
@@ -242,6 +256,7 @@ export default {
           message: '失败'
         })
       })
+      this.loading = false
     }
   }
 }
@@ -253,5 +268,14 @@ export default {
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;
+  }
+  .comment_inner{
+    width: 200px;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 3; /** 显示的行数 **/
+    overflow: hidden;  /** 隐藏超出的内容 **/
   }
 </style>

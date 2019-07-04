@@ -7,10 +7,11 @@
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
                 {{info.name}}
-                <i><img src="@/assets/avatar.png" style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
+                <i><img src="@/assets/avatar.png"
+                        style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item >修改密码</el-dropdown-item>
+              <el-dropdown-item>修改密码</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -67,6 +68,10 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">论文巨著</span>
               </el-menu-item>
+              <el-menu-item index="/carousel">
+                <i class="el-icon-setting"></i>
+                <span slot="title">轮播图管理</span>
+              </el-menu-item>
             </el-menu>
           </div>
         </el-aside>
@@ -78,10 +83,10 @@
           <transition name="fade">
             <router-view></router-view>
           </transition>
-            <!--          <keep-alive>-->
-<!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
-<!--          </keep-alive>-->
-<!--          <router-view v-if="!this.$route.meta.keepAlive"></router-view>-->
+          <!--          <keep-alive>-->
+          <!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
+          <!--          </keep-alive>-->
+          <!--          <router-view v-if="!this.$route.meta.keepAlive"></router-view>-->
         </el-main>
       </el-container>
     </el-container>
@@ -179,7 +184,8 @@ export default {
   .fade-enter-active, .fade-leave-active {
     transition: opacity 500ms;
   }
-  .fade-enter, .fade-leave{
+
+  .fade-enter, .fade-leave {
     opacity: 0;
   }
 </style>

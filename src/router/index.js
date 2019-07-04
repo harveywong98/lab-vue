@@ -13,6 +13,7 @@ import Reward from '@/views/content/Reward'
 import Patent from '@/views/content/Patent'
 import Thesis from '@/views/content/Thesis'
 import Project from '@/views/content/Project'
+import Carousel from '@/views/content/Carousel'
 
 Vue.use(Router)
 
@@ -77,6 +78,10 @@ export default new Router({
           path: '/thesis',
           name: '论文巨著',
           component: Thesis
+        }, {
+          path: '/carousel',
+          name: '轮播图管理',
+          component: Carousel
         }
       ]
     }
