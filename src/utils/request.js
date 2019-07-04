@@ -5,7 +5,6 @@ import { getCookie } from '@/utils/auth'
 
 const request = axios.create({
   baseURL: process.env.BASE_API,
-  // baseURL: 'http://210.46.141.35:8888/',
   timeout: 5000,
   headers: {
     'Content-type': 'application/json;charset=UTF-8'

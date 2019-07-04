@@ -8,6 +8,9 @@
       </el-col>
     </el-row>
     <el-table
+      v-loading="loading"
+      element-loading-text="拼命加载中"
+      element-loading-spinner="el-icon-loading"
       stripe
       :data="resultData"
       style="width: 100%">
@@ -45,20 +48,23 @@
       @next-click="nextClick"
       :page-count="page.pageNum">
     </el-pagination>
-    <pop-up-dialog
-      v-if='isShowPublish'
-      :getted_html="getted_html"
-      :getted_title="getted_title"
-      :module="name"
-      :operation="clicked_button_type"
-      :is-show="isShowPublish"
-      @on-request="sendRequest"
-      @on-close="closeDialog">
-    </pop-up-dialog>
+    <transition name="fade">
+      <pop-up-dialog
+        v-if='isShowPublish'
+        :getted_html="getted_html"
+        :getted_title="getted_title"
+        :module="name"
+        :operation="clicked_button_type"
+        :is-show="isShowPublish"
+        @on-request="sendRequest"
+        @on-close="closeDialog">
+      </pop-up-dialog>
+    </transition>
   </div>
 </template>
 
 <script>
+import {Message} from 'element-ui'
 import base64 from 'js-base64'
 import PopUpDialog from '@/components/PopUpDialog'
 import {deleteOneNews, insertOneNews, queryByPage, queryOne, updateOneNews} from '../../api/news'
@@ -70,6 +76,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       page: {
         prePage: 0,
         nextPage: 0,
@@ -111,6 +118,10 @@ export default {
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
       })
     },
     deleteOneById (id) {
@@ -119,7 +130,12 @@ export default {
       }).then(resp => {
         this.initData()
         console.log(resp.data)
-      })
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
+      }
+      )
     },
     editOne (id, event) {
       this.clicked_button_type = event.currentTarget.getAttribute('button_type')
@@ -132,6 +148,10 @@ export default {
         this.getted_html = Base64.decode(resp.data.data.content)
         console.log(this.getted_html)
         this.getted_title = resp.data.data.title
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
       })
     },
     handleClick (event) {
@@ -155,7 +175,10 @@ export default {
         }).then(resp => {
           this.initData()
           this.isShowPublish = false
-          // console.log(resp.data)
+        }).catch(() => {
+          Message.error({
+            message: '失败'
+          })
         })
       } else if (this.clicked_button_type === '编辑') {
         updateOneNews({
@@ -165,7 +188,11 @@ export default {
         }).then(
           this.initData(),
           this.isShowPublish = false
-        )
+        ).catch(() => {
+          Message.error({
+            message: '失败'
+          })
+        })
       }
       this.getted_title = ''
       this.getted_html = ''
@@ -179,6 +206,10 @@ export default {
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
       })
     },
     prevClick () {
@@ -190,6 +221,10 @@ export default {
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
       })
     },
     nextClick () {
@@ -202,6 +237,10 @@ export default {
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
         console.log(this.tableData)
+      }).catch(() => {
+        Message.error({
+          message: '失败'
+        })
       })
     }
   }
@@ -209,5 +248,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 250ms;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 </style>

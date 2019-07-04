@@ -75,8 +75,10 @@
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
           </el-breadcrumb>
-          <router-view></router-view>
-<!--          <keep-alive>-->
+          <transition name="fade">
+            <router-view></router-view>
+          </transition>
+            <!--          <keep-alive>-->
 <!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
 <!--          </keep-alive>-->
 <!--          <router-view v-if="!this.$route.meta.keepAlive"></router-view>-->
@@ -172,5 +174,12 @@ export default {
   .el-submenu .el-menu-item {
     width: 180px;
     min-width: 175px;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 500ms;
+  }
+  .fade-enter, .fade-leave{
+    opacity: 0;
   }
 </style>
