@@ -23,3 +23,11 @@ export function getCarousel (params) {
     params: params
   })
 }
+
+export function deleteCarousel (params) {
+  return request({
+    url: '/image/for',
+    method: 'delete',
+    params: params
+  })
+}

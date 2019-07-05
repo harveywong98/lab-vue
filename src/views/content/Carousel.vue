@@ -1,36 +1,34 @@
 <template>
-    <div @click="consoles">
-      <div style="display:inline" v-for="item in urls" :key="item" >
-        <el-image :src="item" style="height: 200px;" fit="contain"></el-image>
-<!--        <el-image-->
-<!--          style="width: 100px; height: 100px"-->
-<!--          src="item"-->
-<!--          fit="contain">-->
-<!--        </el-image>-->
+    <div>
+      <div class="block" >
+        <h2 style="text-align: center">轮播图预览（点击图片删除轮播图）</h2>
+        <el-carousel trigger="click" height="300px" >
+          <el-carousel-item v-for="item in urlObjs" :key="item">
+            <el-image :src="item.content" fit="fit" @click="popup(item.id)"></el-image>
+          </el-carousel-item>
+        </el-carousel>
       </div>
-      <el-upload
-        action="https://jsonplaceholder.typicode.com/posts/"
-        list-type="picture-card"
-        :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove">
-        <i class="el-icon-plus"></i>
-      </el-upload>
-      <el-dialog :visible.sync="dialogVisible">
-        <img width="100%" :src="dialogImageUrl" alt="">
+      <el-dialog
+        title="删除确认"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+        <span>确定要删除这张轮播图吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handleDelete">确 定</el-button>
+        </span>
       </el-dialog>
     </div>
 </template>
 
 <script>
-import {getCarousel} from '../../api/singlePage'
+import {Message} from 'element-ui'
+import {getCarousel, deleteCarousel} from '../../api/singlePage'
 export default {
   data () {
     return {
-      // urls: [
-      //   'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      //   'http://192.168.1.120:8888/files/1562290622880.png',
-      //   'http://192.168.1.120:8888/files/1562290631748.png'
-      // ],
+      clickedId: 0,
       type: 'image',
       urlObjs: [],
       action: process.env.BASE_API + '/posts',
@@ -46,28 +44,41 @@ export default {
       this.urlObjs = resp.data.data
     })
   },
-  computed: {
-    urls () {
-      return this.urlObjs.map((o) => {
-        return o['content']
-      })
-    }
-  },
   methods: {
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
+    popup (id) {
+      this.clickedId = id
       this.dialogVisible = true
     },
-    consoles () {
-      console.log(this.urls)
+    handleDelete () {
+      deleteCarousel({
+        type: this.type,
+        id: this.clickedId
+      }).then(resp => {
+        getCarousel({
+          type: this.type
+        }).then(resp => {
+          this.urlObjs = resp.data.data
+        })
+      }).catch(err => Message.error(err))
     }
   }
 }
 </script>
 
 <style scoped>
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 150px;
+    margin: 0;
+  }
 
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
 </style>
