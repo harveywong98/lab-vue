@@ -3,7 +3,7 @@
            label-width="0px" v-loading="loading">
     <h3 class="login_title">系统登录</h3>
     <el-form-item prop="account">
-      <el-input type="text" v-model="loginForm.username"
+      <el-input type="text" v-model="loginForm.name"
                 auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
     <el-form-item prop="checkPass">
@@ -28,8 +28,8 @@ export default{
       },
       checked: true,
       loginForm: {
-        name: 'admin',
-        password: '123'
+        name: 'luo',
+        password: 'admin123'
       },
       loading: false
     }
@@ -43,7 +43,7 @@ export default{
       //   password: this.loginForm.password
       // })
       login({
-        name: this.loginForm.username,
+        name: this.loginForm.name,
         password: this.loginForm.password
       }).then(resp => {
         _this.loading = false

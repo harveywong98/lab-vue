@@ -62,6 +62,7 @@ export default {
             // 服务端接收文件的参数名，文件数据，文件名
             formData.append('file', blobInfo.blob(), blobInfo.filename())
             uploadPicture(formData).then((res) => {
+              // console.log(res)
               console.log(res.data)
               success(res.data.data)
             }).catch(() => {

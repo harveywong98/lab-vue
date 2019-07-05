@@ -15,3 +15,11 @@ export function updateOne (data) {
     data: data
   })
 }
+
+export function getCarousel (params) {
+  return request({
+    url: '/image/for',
+    method: 'get',
+    params: params
+  })
+}
