@@ -8,11 +8,11 @@
           </el-carousel-item>
         </el-carousel>
       </div>
+      <cropper/>
       <el-dialog
         title="删除确认"
         :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose">
+        width="30%">
         <span>确定要删除这张轮播图吗？</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -25,7 +25,11 @@
 <script>
 import {Message} from 'element-ui'
 import {getCarousel, deleteCarousel} from '../../api/singlePage'
+import Cropper from '@/components/Cropper'
 export default {
+  components: {
+    'cropper': Cropper
+  },
   data () {
     return {
       clickedId: 0,
