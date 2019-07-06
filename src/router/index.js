@@ -13,7 +13,8 @@ import Reward from '@/views/content/Reward'
 import Patent from '@/views/content/Patent'
 import Thesis from '@/views/content/Thesis'
 import Project from '@/views/content/Project'
-import Carousel from '@/views/content/Carousel'
+import CarouselView from '@/views/content/CarouselView'
+import CarouselUpload from '@/views/content/CarouselUpload'
 
 Vue.use(Router)
 
@@ -29,59 +30,63 @@ export default new Router({
       name: '首页',
       component: Home,
       hidden: true,
-      redirect: '/news',
+      redirect: '/home/news',
       meta: {
         requireAuth: true
       },
       children: [
         {
-          path: '/news',
+          path: 'news',
           name: '新闻动态',
           component: News
         }, {
-          path: '/notices',
+          path: 'notices',
           name: '公示公告',
           component: Notices
         }, {
-          path: '/regulations',
+          path: 'regulations',
           name: '规章制度',
           component: Regulations
         }, {
-          path: '/cultivation',
+          path: 'cultivation',
           name: '学生培养',
           component: Cultivation
         }, {
-          path: '/members',
+          path: 'members',
           name: '团队成员',
           component: Members
         }, {
-          path: '/activities',
+          path: 'activities',
           name: '实验室风采',
           component: Activities
         }, {
-          path: '/research',
+          path: 'research',
           name: '研究方向',
           component: Research
         }, {
-          path: '/project',
+          path: 'project',
           name: '科研项目',
           component: Project
         }, {
-          path: '/reward',
+          path: 'reward',
           name: '获奖成果',
           component: Reward
         }, {
-          path: '/patent',
+          path: 'patent',
           name: '专利成果',
           component: Patent
         }, {
-          path: '/thesis',
+          path: 'thesis',
           name: '论文巨著',
           component: Thesis
         }, {
-          path: '/carousel',
-          name: '轮播图管理',
-          component: Carousel
+          path: 'carousel/view',
+          name: '轮播图浏览和删除',
+          component: CarouselView
+        }, {
+          path: 'carousel/upload',
+          name: '轮播图上传',
+          component: CarouselUpload
         }
       ]
     }

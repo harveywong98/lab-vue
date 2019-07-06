@@ -20,59 +20,64 @@
       <el-container>
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
-            <el-menu
-              router
-              style="background: #ececec;width: 180px;"
-              default-active="/news">
-              <el-menu-item index="/news">
-                <i class="el-icon-menu"></i>
-                <span slot="title">新闻动态</span>
-              </el-menu-item>
-              <el-menu-item index="/notices">
-                <i class="el-icon-menu"></i>
-                <span slot="title">公示公告</span>
-              </el-menu-item>
-              <el-menu-item index="/regulations">
-                <i class="el-icon-document"></i>
-                <span slot="title">规章制度</span>
-              </el-menu-item>
-              <el-menu-item index="/cultivation">
-                <i class="el-icon-setting"></i>
-                <span slot="title">学生培养</span>
-              </el-menu-item>
-              <el-menu-item index="/members">
-                <i class="el-icon-setting"></i>
-                <span slot="title">团队成员</span>
-              </el-menu-item>
-              <el-menu-item index="/activities">
-                <i class="el-icon-setting"></i>
-                <span slot="title">实验室风采</span>
-              </el-menu-item>
-              <el-menu-item index="/research">
-                <i class="el-icon-setting"></i>
-                <span slot="title">研究方向</span>
-              </el-menu-item>
-              <el-menu-item index="/project">
-                <i class="el-icon-setting"></i>
-                <span slot="title">科研项目</span>
-              </el-menu-item>
-              <el-menu-item index="/reward">
-                <i class="el-icon-setting"></i>
-                <span slot="title">获奖成果</span>
-              </el-menu-item>
-              <el-menu-item index="/patent">
-                <i class="el-icon-setting"></i>
-                <span slot="title">专利成果</span>
-              </el-menu-item>
-              <el-menu-item index="/thesis">
-                <i class="el-icon-setting"></i>
-                <span slot="title">论文巨著</span>
-              </el-menu-item>
-              <el-menu-item index="/carousel">
-                <i class="el-icon-setting"></i>
-                <span slot="title">轮播图管理</span>
-              </el-menu-item>
-            </el-menu>
+              <el-menu
+                router
+                style="background: #ececec;width: 176px;"
+                default-active="/home/news">
+                <el-menu-item index="/home/news">
+                  <i class="el-icon-menu"></i>
+                  <span slot="title">新闻动态</span>
+                </el-menu-item>
+                <el-menu-item index="/home/notices">
+                  <i class="el-icon-menu"></i>
+                  <span slot="title">公示公告</span>
+                </el-menu-item>
+                <el-menu-item index="/home/regulations">
+                  <i class="el-icon-document"></i>
+                  <span slot="title">规章制度</span>
+                </el-menu-item>
+                <el-menu-item index="/home/cultivation">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">学生培养</span>
+                </el-menu-item>
+                <el-menu-item index="/home/members">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">团队成员</span>
+                </el-menu-item>
+                <el-menu-item index="/home/activities">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">实验室风采</span>
+                </el-menu-item>
+                <el-menu-item index="/home/research">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">研究方向</span>
+                </el-menu-item>
+                <el-menu-item index="/home/project">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">科研项目</span>
+                </el-menu-item>
+                <el-menu-item index="/home/reward">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">获奖成果</span>
+                </el-menu-item>
+                <el-menu-item index="/home/patent">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">专利成果</span>
+                </el-menu-item>
+                <el-menu-item index="/home/thesis">
+                  <i class="el-icon-setting"></i>
+                  <span slot="title">论文巨著</span>
+                </el-menu-item>
+                <el-submenu index="/home/carousel/view">
+                  <template slot="title"><i class="el-icon-setting"></i>轮播图管理</template>
+                  <el-menu-item index="/home/carousel/view">
+                    <span slot="title">轮播图浏览和删除</span>
+                  </el-menu-item>
+                  <el-menu-item index="/home/carousel/upload">
+                    <span slot="title">轮播图上传</span>
+                  </el-menu-item>
+                </el-submenu>
+              </el-menu>
           </div>
         </el-aside>
         <el-main>

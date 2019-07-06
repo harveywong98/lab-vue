@@ -1,9 +1,24 @@
 import request from '@/utils/fileRequest'
 
-export default function uploadPicture (formData) {
+export function uploadPicture (formData) {
   return request({
     url: '/image',
-    // url: '/upload',
+    method: 'post',
+    data: formData
+  })
+}
+
+export function uploadCarousel (formData) {
+  return request({
+    url: '/image/for',
+    method: 'post',
+    data: formData
+  })
+}
+
+export function uploadAvatar (formData) {
+  return request({
+    url: '/image/for',
     method: 'post',
     data: formData
   })

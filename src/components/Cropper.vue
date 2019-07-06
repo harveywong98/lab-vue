@@ -29,25 +29,33 @@
       <button @click="rotateLeft" class="btn">向左旋转</button>
       <button @click="rotateRight" class="btn">向右旋转</button>
       <button @click="finish('blob')" class="btn">预览</button>
+      <button @click="tryUpload" class="btn">确认上传</button>
     </div>
   </div>
 </template>
 
 <script>
+import { getCookie } from '@/utils/auth'
 import { VueCropper } from 'vue-cropper'
+// import {Message} from 'element-ui'
 export default {
   name: 'Cropper',
   components: {
     'my-copper': VueCropper
   },
+  mounted () {
+    this.APITYPE = this.apitype
+  },
+  props: ['apitype'],
   data () {
     return {
+      APITYPE: 'carousel',
       model: false,
       modelSrc: '',
       crap: false,
       previews: {},
       option: {
-        img: 'https://qn-qn-kibey-static-cdn.app-echo.com/goodboy-weixin.PNG',
+        img: 'https://vuejs.org/images/logo.png',
         size: 1,
         full: false,
         outputType: 'png',
@@ -70,7 +78,6 @@ export default {
       this.previews = data
     },
     refreshCrop () {
-      // clear
       this.$refs.cropper.refresh()
     },
     changeScale (num) {
@@ -84,8 +91,6 @@ export default {
       this.$refs.cropper.rotateRight()
     },
     finish () {
-      // var test = window.open('about:blank')
-      // test.document.body.innerHTML = '图片生成中..'
       this.$refs.cropper.getCropBlob((data) => {
         console.log(data)
         var img = window.URL.createObjectURL(data)
@@ -93,6 +98,31 @@ export default {
         this.modelSrc = img
         console.log(this.modelSrc)
       })
+    },
+    tryUpload () {
+      var formData = new FormData()
+      // let name = Math.floor(Math.random() * 1000000)
+      this.filesss = this.$refs.cropper.getCropBlob(data => {
+        // let file = this.dataURLtoFile(data, name)
+        formData.append('file', data, (Math.floor(Math.random() * 1000000) + '.' + this.option.outputType).toString())
+        console.log(formData.get('file'))
+        let config = {
+          headers: {
+            'Authorization': getCookie('USER_TOKEN')
+          }
+        }
+        let url = process.env.BASE_API + '/image/for'
+        if (url === 'avatar') {
+          url = process.env.BASE_API + '/?'
+        }
+        this.$axios.post('url', formData, config)
+          .then(resp => {
+            console.log(resp)
+          }).catch(err => {
+            console.log(err)
+          })
+      })
+      console.log(this.filesss)
     },
     imgLoad (msg) {
       console.log(msg)
@@ -136,7 +166,7 @@ export default {
   }
 
   .cut {
-    width: 500px;
+    width: 80%;
     height: 500px;
     margin: 30px auto;
   }

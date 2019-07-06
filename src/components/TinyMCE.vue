@@ -9,7 +9,7 @@
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme'
 import Editor from '@tinymce/tinymce-vue'
-import uploadPicture from '../api/upload'
+import {uploadPicture} from '../api/upload'
 
 import 'tinymce/plugins/image'
 import 'tinymce/plugins/link'

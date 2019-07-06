@@ -6,9 +6,11 @@ import router from './router'
 import ElementUI from 'element-ui'
 import store from './store'
 import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, { zIndex: 202 })
+Vue.prototype.$axios = axios
 
 router.beforeEach((to, from, next) => {
   if (to.name === 'Login') {
