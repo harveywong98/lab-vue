@@ -15,17 +15,23 @@
       :data="resultData"
       style="width: 100%">
       <el-table-column
-        prop="date"
         label="头像"
         min-width="10%">
+        <template slot-scope="scope">
+          <img :src="scope.row.image" width="100px" height="100px" alt="头像"/>
+        </template>
+        <el-image
+          style="width: 100px; height: 100px"
+          src="image"
+          fit="fit"></el-image>
       </el-table-column>
       <el-table-column
-        prop="title"
+        prop="name"
         label="姓名"
         min-width="15%">
       </el-table-column>
       <el-table-column
-        prop="title"
+        prop="position"
         label="职称"
         min-width="15%">
       </el-table-column>
@@ -60,6 +66,7 @@
         :getted_html="getted_html"
         :getted_membername="getted_membername"
         :getted_rank="getted_rank"
+        :getted_avatar="getted_avatar"
         :module="name"
         :operation="clicked_button_type"
         :is-show="isShowPublish"
@@ -162,6 +169,9 @@ export default {
         this.isShowPublish = true
         let Base64 = base64.Base64
         this.getted_html = Base64.decode(resp.data.data.content)
+        this.getted_avatar = resp.data.data.image
+        this.getted_membername = resp.data.data.name
+        this.getted_rank = resp.data.data.position
         console.log(this.getted_html)
         this.getted_title = resp.data.data.title
       }).catch(() => {
@@ -171,6 +181,10 @@ export default {
       })
     },
     handleClick (event) {
+      this.getted_html = ''
+      this.getted_avatar = ''
+      this.getted_membername = ''
+      this.getted_rank = ''
       this.isShowPublish = true
       this.clicked_button_type = event.currentTarget.getAttribute('button_type')
     },
@@ -179,7 +193,7 @@ export default {
       this.getted_title = ''
       this.getted_html = ''
     },
-    sendRequest (title, content) {
+    sendRequest (memberName, rank, content, avatar) {
       this.loading = true
       var that = this
       let Base64 = base64.Base64
@@ -187,8 +201,10 @@ export default {
       console.log(encodedHtml)
       if (this.clicked_button_type === '添加') {
         insertOneMember({
-          title: title,
-          content: encodedHtml
+          name: memberName,
+          position: rank,
+          content: encodedHtml,
+          image: avatar
         }).then(resp => {
           this.initData()
           this.isShowPublish = false
@@ -200,8 +216,10 @@ export default {
       } else if (this.clicked_button_type === '编辑') {
         updateOneMember({
           id: that.editing_id,
-          title: title,
-          content: encodedHtml
+          name: memberName,
+          position: rank,
+          content: encodedHtml,
+          image: avatar
         }).then(
           this.initData(),
           this.isShowPublish = false

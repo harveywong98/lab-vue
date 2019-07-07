@@ -34,6 +34,7 @@
           <br/>
           <div @click="showCropper">
             <el-image
+              :src="avatar"
               style="width: 100px; height: 100px"
               fit="fit"></el-image>
             </div>
@@ -52,7 +53,10 @@
                  :visible.sync="isShowCropper"
                  :before-close="hideCropper"
                  :append-to-body="true" >
-        <cropper :apitype="apitype" :fixedd="fixedd"></cropper>
+        <cropper :apitype="apitype"
+                 :fixedd="fixedd"
+                 @imgurlchanged="imgUrlChanged"
+                 ref="mycropper"></cropper>
       </el-dialog>
     </el-dialog>
   </div>
@@ -89,7 +93,12 @@ export default {
     },
     closeAndRequest () {
       let richText = this.$refs.input
-      this.$emit('on-request', this.titles, richText.tinymceHtml)
+      let cropper = this.$refs.mycropper
+      this.$emit('on-request', this.memberName, this.rank, richText.tinymceHtml, cropper.respUrl)
+    },
+    imgUrlChanged (url) {
+      this.avatar = url
+      this.isShowCropper = false
     }
   },
   computed: {

@@ -11,7 +11,7 @@
                         style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
               <el-dropdown-item command="logout" divided>注销</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -99,11 +99,50 @@
         </el-main>
       </el-container>
     </el-container>
+
+    <el-dialog
+      title="修改密码"
+      :visible.sync="showChangePasswdDialog"
+      width="55%"
+      :before-close="handleClose">
+        <el-input placeholder="请输入原密码" v-model="password.oldPasswd" show-password></el-input>
+        <el-input placeholder="请输入新密码" v-model="password.newPasswd" show-password></el-input>
+        <el-input placeholder="请再次输入新密码" v-model="password.repeatNewPasswd" show-password></el-input>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="showChangePasswdDialog = false">取 消</el-button>
+    <el-button type="primary" @click="updatePasswd">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 <script>
+import updatePasword from '@/api/admin'
+import {Message} from 'element-ui'
 export default {
   methods: {
+    updatePasswd () {
+      updatePasword({
+        name: this.$store.state.name,
+        oldPassword: this.oldPasswd,
+        newPassword: this.newPassword
+      }).then(resp => {
+        if (resp.data.code === '200') {
+          Message.success('修改成功')
+        } else {
+          Message.error(resp.data.message)
+        }
+      }).catch(err => {
+        Message.error(err)
+      })
+      this.showChangePasswdDialog = false
+    },
+    handleClose (done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
     handleCommand (cmd) {
       var _this = this
       if (cmd === 'logout') {
@@ -121,11 +160,19 @@ export default {
             message: '取消'
           })
         })
+      } else if (cmd === 'changePassword') {
+        this.showChangePasswdDialog = true
       }
     }
   },
   data () {
     return {
+      password: {
+        oldPasswd: '',
+        newPasswd: '',
+        repeatNewPasswd: ''
+      },
+      showChangePasswdDialog: true,
       isDot: false
     }
   },

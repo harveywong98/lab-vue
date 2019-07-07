@@ -40,13 +40,13 @@
 <script>
 import { getCookie } from '@/utils/auth'
 import { VueCropper } from 'vue-cropper'
-// import {Message} from 'element-ui'
+import {Message} from 'element-ui'
 export default {
   name: 'Cropper',
   components: {
     'my-copper': VueCropper
   },
-  created () {
+  mounted () {
     let _this = this
     this.APITYPE = _this.apitype
     if (this.APITYPE === 'avatar') {
@@ -68,12 +68,16 @@ export default {
       //   this.option.autoCropWidth = '200px'
       //   this.option.autoCropHeight = '200px'
       // }
+    },
+    respUrl () {
+      this.$emit('imgurlchanged', this.respUrl)
     }
   },
   props: ['apitype'],
   data () {
     return {
       APITYPE: 'carousel',
+      respUrl: '',
       styles: {
         width: '70%',
         height: '450px',
@@ -84,7 +88,7 @@ export default {
       crap: false,
       previews: {},
       option: {
-        img: 'src/assets/logo.png',
+        img: '',
         size: 1,
         full: false,
         outputType: 'png',
@@ -133,13 +137,17 @@ export default {
           }
         }
         let url = process.env.BASE_API + '/image/for'
-        if (url === 'avatar') {
-          url = process.env.BASE_API + '/?'
+        if (this.APITYPE === 'avatar') {
+          url = process.env.BASE_API + '/image'
         }
-        this.$axios.post('url', formData, config)
+        console.log(this.APITYPE)
+        this.$axios.post(url, formData, config)
           .then(resp => {
-            console.log(resp)
+            this.respUrl = resp.data.data
+            Message.success('上传成功')
+            console.log(this.respUrl)
           }).catch(err => {
+            Message.error(err)
             console.log(err)
           })
       })
