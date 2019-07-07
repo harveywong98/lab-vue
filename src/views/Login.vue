@@ -47,7 +47,7 @@ export default{
         password: this.loginForm.password
       }).then(resp => {
         _this.loading = false
-        if (resp && resp.status === 200) {
+        if (resp.data.code === 200) {
           var info = {
             'token': resp.data.data,
             'name': _this.loginForm.name

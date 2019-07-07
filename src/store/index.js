@@ -26,7 +26,8 @@ export default new Vuex.Store({
       removeCookie('USER_TOKEN')
       removeCookie('USER_NAME')
       // window.localStorage.removeItem('info')
-      state.info = null
+      state.info.token = null
+      state.info.name = null
     }
   }
 })

@@ -18,8 +18,9 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="180px" class="home-aside">
-          <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
+        <el-aside width="176px" class="home-aside" style="overflow:auto;overflow-x: hidden;display: flex;justify-content: flex-start;text-align: left;height: 100%">
+<!--          <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;height: 100%">-->
+            <el-scrollbar>
               <el-menu
                 router
                 style="background: #ececec;width: 176px;"
@@ -78,20 +79,23 @@
                   </el-menu-item>
                 </el-submenu>
               </el-menu>
-          </div>
+            </el-scrollbar>
+<!--          </div>-->
         </el-aside>
         <el-main>
-          <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
-          </el-breadcrumb>
-<!--          <transition name="fade">-->
-<!--          </transition>-->
-          <router-view></router-view>
-          <!--          <keep-alive>-->
-          <!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
-          <!--          </keep-alive>-->
-          <!--          <router-view v-if="!this.$route.meta.keepAlive"></router-view>-->
+          <el-scrollbar>
+            <el-breadcrumb separator-class="el-icon-arrow-right">
+              <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
+            </el-breadcrumb>
+  <!--          <transition name="fade">-->
+  <!--          </transition>-->
+            <router-view></router-view>
+            <!--          <keep-alive>-->
+            <!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
+            <!--          </keep-alive>-->
+            <!--          <router-view v-if="!this.$route.meta.keepAlive"></router-view>-->
+          </el-scrollbar>
         </el-main>
       </el-container>
     </el-container>
@@ -108,8 +112,8 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          _this.getRequest('/logout')
-          // _this.$store.commit('logout')
+          // _this.getRequest('/logout')
+          _this.$store.commit('logout')
           _this.$router.replace({path: '/'})
         }).catch(() => {
           _this.$message({

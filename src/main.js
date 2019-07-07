@@ -18,13 +18,16 @@ router.beforeEach((to, from, next) => {
     return
   }
   var name = store.state.info.name
-  if (name === '') {
-    if (to.meta.requireAuth || to.name == null) {
-      next({path: '/', query: {redirect: to.path}})
-      // next()
-    } else {
-      next()
-    }
+  console.log('name是' + name)
+  if (name === undefined || name === '' || name === null) {
+    next({path: '/', query: {redirect: to.path}})
+    // if (to.meta.requireAuth || to.name == null) {
+    // if (to.meta.requireAuth || to.name in pages) {
+    //   next({path: '/', query: {redirect: to.path}})
+    //   // next()
+    // } else {
+    //   next({path: '/', query: {redirect: to.path}})
+    // }
   } else {
     next()
   }
@@ -35,7 +38,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
-  store, // Fuck！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+  store,
   components: { App },
   template: '<App/>'
 })

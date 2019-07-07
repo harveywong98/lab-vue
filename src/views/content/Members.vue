@@ -3,7 +3,7 @@
     <el-row type="flex" justify="end">
       <el-col :span="2">
         <div class="grid-content bg-purple">
-          <el-button icon='el-icon-plus' size="small" @click="handleClick($event)" button_type="发布">添加成员</el-button>
+          <el-button icon='el-icon-plus' size="small" @click="handleClick($event)" button_type="添加">添加成员</el-button>
         </div>
       </el-col>
     </el-row>
@@ -185,7 +185,7 @@ export default {
       let Base64 = base64.Base64
       let encodedHtml = Base64.encode(content)
       console.log(encodedHtml)
-      if (this.clicked_button_type === '发布') {
+      if (this.clicked_button_type === '添加') {
         insertOneMember({
           title: title,
           content: encodedHtml
