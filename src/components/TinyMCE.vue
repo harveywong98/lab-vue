@@ -1,7 +1,6 @@
 <template>
   <div>
     <editor id='tinymce' v-model='tinymceHtml' :init='init'></editor>
-<!--    <editor id='editorId' v-model='tinymceHtml' :init='init'></editor>-->
   </div>
 </template>
 
@@ -78,6 +77,9 @@ export default {
   },
   components: {
     'editor': Editor
+  },
+  mounted () {
+
   }
 }
 </script>

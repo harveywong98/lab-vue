@@ -5,20 +5,6 @@
         <img :src="modelSrc" alt="">
       </div>
     </div>
-    <div class="cut">
-      <my-copper
-        ref="cropper" :img="option.img" :output-size="option.size" :output-type="option.outputType" :info="true" :full="option.full"
-        :can-move="option.canMove" :can-move-box="option.canMoveBox" :fixed-box="option.fixedBox" :original="option.original"
-        :auto-crop="option.autoCrop" :auto-crop-width="option.autoCropWidth" :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox"
-        @real-time="realTime" :high="option.high"
-        @img-load="imgLoad"
-      ></my-copper>
-    </div>
-    <div class="show-preview" :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden', 'margin': '5px'}">
-      <div :style="previews.div">
-        <img :src="previews.url" :style="previews.img">
-      </div>
-    </div>
     <div>
       <label class="btn" for="uploads">选择图片</label>
       <input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);" accept="image/png, image/jpeg, image/gif, image/jpg"
@@ -28,9 +14,26 @@
       <button @click="changeScale(-1)" class="btn">缩小</button>
       <button @click="rotateLeft" class="btn">向左旋转</button>
       <button @click="rotateRight" class="btn">向右旋转</button>
-      <button @click="finish('blob')" class="btn">预览</button>
       <button @click="tryUpload" class="btn">确认上传</button>
     </div>
+    <br/>
+<!--    <div class="cut">-->
+<!--    <div :style="{width: 80%; height: 500px;}">-->
+    <div :style="{width: styles.width, height: styles.height, margin: 'auto'}">
+      <my-copper
+        ref="cropper" :img="option.img" :output-size="option.size" :output-type="option.outputType" :info="true" :full="option.full" :fixed="option.fixed" :fixedNumber="option.fixedNumber"
+        :can-move="option.canMove" :can-move-box="option.canMoveBox" :fixed-box="option.fixedBox" :original="option.original"
+        :auto-crop="option.autoCrop" :auto-crop-width="option.autoCropWidth" :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox"
+        @real-time="realTime" :high="option.high"
+        @img-load="imgLoad"
+      ></my-copper>
+    </div>
+<!--    <div class="show-preview" :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden', 'margin': '5px'}">-->
+<!--&lt;!&ndash;    <div class="show-preview" :style="{'width': '200px', 'height': '200px',  'overflow': 'hidden', 'margin': '5px'}">&ndash;&gt;-->
+<!--      <div :style="previews.div">-->
+<!--        <img :src="previews.url" :style="previews.img" alt="预览">-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -43,31 +46,58 @@ export default {
   components: {
     'my-copper': VueCropper
   },
-  mounted () {
-    this.APITYPE = this.apitype
+  created () {
+    let _this = this
+    this.APITYPE = _this.apitype
+    if (this.APITYPE === 'avatar') {
+      this.styles.width = '600px'
+      this.styles.height = '400px'
+      this.option.fixed = true
+      this.option.autoCropWidth = '200px'
+      this.option.autoCropHeight = '200px'
+    }
+  },
+  watch: {
+    apitype () {
+      // let _this = this
+      // this.APITYPE = _this.apitype
+      // if (this.APITYPE === 'avatar') {
+      //   this.styles.width = '600px'
+      //   this.styles.height = '300px'
+      //   this.option.fixed = true
+      //   this.option.autoCropWidth = '200px'
+      //   this.option.autoCropHeight = '200px'
+      // }
+    }
   },
   props: ['apitype'],
   data () {
     return {
       APITYPE: 'carousel',
+      styles: {
+        width: '70%',
+        height: '450px',
+        textAlign: 'center'
+      },
       model: false,
       modelSrc: '',
       crap: false,
       previews: {},
       option: {
-        img: 'https://vuejs.org/images/logo.png',
+        img: 'src/assets/logo.png',
         size: 1,
         full: false,
         outputType: 'png',
         canMove: true,
+        fixed: false,
+        fixedNumber: [1, 1],
         fixedBox: false,
         original: false,
         canMoveBox: true,
         autoCrop: true,
-        // 只有自动截图开启 宽度高度才生效
         autoCropWidth: 200,
         autoCropHeight: 150,
-        centerBox: false,
+        centerBox: true,
         high: true
       },
       show: true
@@ -89,15 +119,6 @@ export default {
     },
     rotateRight () {
       this.$refs.cropper.rotateRight()
-    },
-    finish () {
-      this.$refs.cropper.getCropBlob((data) => {
-        console.log(data)
-        var img = window.URL.createObjectURL(data)
-        this.model = true
-        this.modelSrc = img
-        console.log(this.modelSrc)
-      })
     },
     tryUpload () {
       var formData = new FormData()
@@ -150,9 +171,6 @@ export default {
           this.example2.img = data
         }
       }
-      // 转化为base64
-      // reader.readAsDataURL(file)
-      // 转化为blob
       reader.readAsArrayBuffer(file)
     }
   }
@@ -166,8 +184,6 @@ export default {
   }
 
   .cut {
-    width: 80%;
-    height: 500px;
     margin: 30px auto;
   }
 
@@ -181,13 +197,6 @@ export default {
     margin: auto;
     max-width: 1200px;
     margin-bottom: 100px;
-  }
-
-  .test-button {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
   }
 
   .btn {
@@ -211,6 +220,7 @@ export default {
     transition: all .2s ease;
     text-decoration: none;
     user-select: none;
+    margin: auto;
   }
 
   .des {
@@ -229,17 +239,9 @@ export default {
     white-space: pre;
   }
 
-  .show-info {
-    margin-bottom: 50px;
-  }
-
   .show-info h2 {
     line-height: 50px;
   }
-
-  /*.title, .title:hover, .title-focus, .title:visited {
-    color: black;
-  }*/
 
   .title {
     display: block;
@@ -253,10 +255,6 @@ export default {
     background-size: 200% 100%;
     animation: slide 5s infinite linear;
     font-size: 40px;
-  }
-
-  .test {
-    height: 500px;
   }
 
   .model {
@@ -286,11 +284,6 @@ export default {
     background-position: 0px 0px, 10px 10px;
     background-size: 20px 20px;
     background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%, #eee 100%),linear-gradient(45deg, #eee 25%, white 25%, white 75%, #eee 75%, #eee 100%);
-  }
-
-  .c-item {
-    display: block;
-    user-select: none;
   }
 
   @keyframes slide {
