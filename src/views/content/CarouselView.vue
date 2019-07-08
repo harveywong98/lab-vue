@@ -63,9 +63,13 @@ export default {
         getCarousel({
           type: this.type
         }).then(resp => {
+          this.dialogVisible = false
           this.urlObjs = resp.data.data
         })
-      }).catch(err => Message.error(err))
+      }).catch(err => {
+        this.dialogVisible = false
+        Message.error(err)
+      })
     }
   }
 }

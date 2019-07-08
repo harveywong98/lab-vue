@@ -50,7 +50,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/', // 一个 nginx 上配置多个 vue 工程
+    // assetsPublicPath: '/admin/',
 
     /**
      * Source Maps

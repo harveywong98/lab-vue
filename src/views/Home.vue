@@ -3,6 +3,7 @@
     <el-container class="home-container">
       <el-header class="home-header">
         <span class="home_title">实验室后台管理系统</span>
+<!--        <div ><img src="../assets/logo.png" alt="实验室后台管理系统" style="width: 75%;height: 95%;left: 15px;"></div>-->
         <div style="display: flex;align-items: center;margin-right: 7px">
           <el-dropdown @command="handleCommand">
             <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
@@ -137,6 +138,7 @@ export default {
       let reg = /^[\w]{6,12}$/
       if (!this.password.newPasswd.match(reg)) {
         Message.error('密码必须由6-12位字母、数字和下划线组成！')
+        return
       }
       updatePasword({
         name: this.$store.state.info.name,
@@ -214,6 +216,7 @@ export default {
 
   .home-header {
     background-color: #20a0ff;
+    /*background-color: #ececec;*/
     color: #333;
     text-align: center;
     display: flex;
