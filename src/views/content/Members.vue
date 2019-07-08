@@ -28,18 +28,12 @@
       <el-table-column
         prop="name"
         label="姓名"
-        min-width="15%">
+        min-width="35%">
       </el-table-column>
       <el-table-column
         prop="position"
         label="职称"
-        min-width="15%">
-      </el-table-column>
-      <el-table-column
-        prop="content"
-        :show-overflow-tooltip="styles.showOverflowTooltip"
-        label="内容"
-        min-width="50%">
+        min-width="35%">
       </el-table-column>
       <el-table-column
         label="操作"

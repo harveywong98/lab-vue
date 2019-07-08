@@ -17,19 +17,19 @@
       <el-table-column
         prop="date"
         label="发布时间"
-        min-width="10%">
+        min-width="42%">
       </el-table-column>
       <el-table-column
         prop="title"
         label="标题"
-        min-width="20%">
+        min-width="42%">
       </el-table-column>
-      <el-table-column
-        prop="content"
-        :show-overflow-tooltip="styles.showOverflowTooltip"
-        label="内容"
-        min-width="60%">
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        prop="content"-->
+<!--        :show-overflow-tooltip="styles.showOverflowTooltip"-->
+<!--        label="内容"-->
+<!--        min-width="60%">-->
+<!--      </el-table-column>-->
       <el-table-column
         label="操作"
         min-width="10%">
