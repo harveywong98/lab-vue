@@ -26,51 +26,51 @@
                 style="background: #ececec;width: 176px;"
                 default-active="/home/news">
                 <el-menu-item index="/home/news">
-                  <i class="el-icon-menu"></i>
+                  <i class="el-icon-news"></i>
                   <span slot="title">新闻动态</span>
                 </el-menu-item>
                 <el-menu-item index="/home/notices">
-                  <i class="el-icon-menu"></i>
+                  <i class="el-icon-c-scale-to-original"></i>
                   <span slot="title">公示公告</span>
                 </el-menu-item>
                 <el-menu-item index="/home/regulations">
                   <i class="el-icon-document"></i>
                   <span slot="title">规章制度</span>
                 </el-menu-item>
-                <el-menu-item index="/home/cultivation">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">学生培养</span>
-                </el-menu-item>
                 <el-menu-item index="/home/members">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-user"></i>
                   <span slot="title">团队成员</span>
                 </el-menu-item>
+                <el-menu-item index="/home/cultivation">
+                  <i class="el-icon-monitor"></i>
+                  <span slot="title">学生培养</span>
+                </el-menu-item>
                 <el-menu-item index="/home/activities">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-basketball"></i>
                   <span slot="title">实验室风采</span>
                 </el-menu-item>
                 <el-menu-item index="/home/research">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-guide"></i>
                   <span slot="title">研究方向</span>
                 </el-menu-item>
                 <el-menu-item index="/home/project">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-discover"></i>
                   <span slot="title">科研项目</span>
                 </el-menu-item>
                 <el-menu-item index="/home/reward">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-trophy"></i>
                   <span slot="title">获奖成果</span>
                 </el-menu-item>
                 <el-menu-item index="/home/patent">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-medal"></i>
                   <span slot="title">专利成果</span>
                 </el-menu-item>
                 <el-menu-item index="/home/thesis">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-notebook-1"></i>
                   <span slot="title">论文巨著</span>
                 </el-menu-item>
                 <el-submenu index="/home/carousel/view">
-                  <template slot="title"><i class="el-icon-setting"></i>轮播图管理</template>
+                  <template slot="title"><i class="el-icon-picture-outline-round"></i>轮播图管理</template>
                   <el-menu-item index="/home/carousel/view">
                     <span slot="title">轮播图浏览和删除</span>
                   </el-menu-item>
@@ -105,9 +105,16 @@
       :visible.sync="showChangePasswdDialog"
       width="55%"
       :before-close="handleClose">
+      <div style="width: 60%;margin:0 auto;">
+        <h3>请输入原密码和新密码</h3>
         <el-input placeholder="请输入原密码" v-model="password.oldPasswd" show-password></el-input>
-        <el-input placeholder="请输入新密码" v-model="password.newPasswd" show-password></el-input>
-        <el-input placeholder="请再次输入新密码" v-model="password.repeatNewPasswd" show-password></el-input>
+        <br/>
+        <br/>
+        <el-input placeholder="请输入新密码" minlength='minLength' v-model="password.newPasswd" show-password></el-input>
+        <br/>
+        <br/>
+        <el-input placeholder="请再次输入新密码" minlength='minLength' v-model="password.repeatNewPasswd" show-password></el-input>
+      </div>
       <span slot="footer" class="dialog-footer">
     <el-button @click="showChangePasswdDialog = false">取 消</el-button>
     <el-button type="primary" @click="updatePasswd">确 定</el-button>
@@ -121,14 +128,28 @@ import {Message} from 'element-ui'
 export default {
   methods: {
     updatePasswd () {
+      if (this.password.newPasswd.length < 6) {
+        Message.error('密码长度至少为6位！')
+        return
+      }
+      if (this.password.newPasswd !== this.password.repeatNewPasswd) {
+        Message.error('两次输入的新密码不一致！')
+        return
+      }
+      let reg = /^[\w]{6,12}$/
+      if (!this.password.newPasswd.match(reg)) {
+        Message.error('密码必须由6-12位字母、数字和下划线组成！')
+      }
       updatePasword({
-        name: this.$store.state.name,
-        oldPassword: this.oldPasswd,
-        newPassword: this.newPassword
+        name: this.$store.state.info.name,
+        password: this.password.newPasswd
+      }, {
+        pass: this.password.oldPasswd
       }).then(resp => {
-        if (resp.data.code === '200') {
+        if (resp.data.code === 200) {
           Message.success('修改成功')
-        } else {
+          this.$router.replace({path: '/'})
+        } else if (resp.data.code === 400) {
           Message.error(resp.data.message)
         }
       }).catch(err => {
@@ -167,12 +188,13 @@ export default {
   },
   data () {
     return {
+      minLength: 6,
       password: {
-        oldPasswd: '',
-        newPasswd: '',
-        repeatNewPasswd: ''
+        oldPasswd: undefined,
+        newPasswd: undefined,
+        repeatNewPasswd: undefined
       },
-      showChangePasswdDialog: true,
+      showChangePasswdDialog: false,
       isDot: false
     }
   },

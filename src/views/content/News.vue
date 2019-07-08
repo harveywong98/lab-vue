@@ -125,6 +125,7 @@ export default {
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
@@ -136,13 +137,15 @@ export default {
         id: id
       }).then(resp => {
         this.initData()
-        console.log(resp.data)
+        // console.log(resp.data)
+        this.loading = false
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
+      // this.loading = false
     },
     editOne (id, event) {
       this.clicked_button_type = event.currentTarget.getAttribute('button_type')
@@ -153,7 +156,7 @@ export default {
         this.isShowPublish = true
         let Base64 = base64.Base64
         this.getted_html = Base64.decode(resp.data.data.content)
-        console.log(this.getted_html)
+        // console.log(this.getted_html)
         this.getted_title = resp.data.data.title
       }).catch(() => {
         Message.error({
@@ -212,16 +215,18 @@ export default {
         page: this.page.currentPage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
+      // this.loading = false
     },
     prevClick () {
       this.loading = true
@@ -233,12 +238,14 @@ export default {
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
+        this.loading = false
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
+      // this.loading = false
     },
     nextClick () {
       this.loading = true
@@ -246,17 +253,19 @@ export default {
         page: this.page.nextPage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
-        console.log(this.tableData)
+        // console.log(this.tableData)
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
+      // this.loading = false
     }
   }
 }

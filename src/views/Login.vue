@@ -1,5 +1,6 @@
 <template>
   <el-form :rules="rules" class="login-container" label-position="left"
+           @keydown.enter="submitClick"
            label-width="0px" v-loading="loading">
     <h3 class="login_title">系统登录</h3>
     <el-form-item prop="account">
@@ -10,14 +11,13 @@
       <el-input type="password" v-model="loginForm.password"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked"
-                 label-position="left">记住密码</el-checkbox>
-    <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%" @click="submitClick">登录</el-button>
+    <el-form-item style="width: 100%" >
+      <el-button type="primary" style="width: 100%" @click="submitClick" >登录</el-button>
     </el-form-item>
   </el-form>
 </template>
 <script>
+import {Message} from 'element-ui'
 import login from '@/api/login'
 export default{
   data () {
@@ -28,8 +28,8 @@ export default{
       },
       checked: true,
       loginForm: {
-        name: 'luo',
-        password: 'admin123'
+        name: '',
+        password: ''
       },
       loading: false
     }
@@ -38,10 +38,6 @@ export default{
     submitClick: function () {
       var _this = this
       this.loading = true
-      // this.postRequest('/admins/login', {
-      //   name: this.loginForm.username,
-      //   password: this.loginForm.password
-      // })
       login({
         name: this.loginForm.name,
         password: this.loginForm.password
@@ -56,6 +52,8 @@ export default{
           var path = _this.$route.query.redirect
           _this.$router
             .replace({path: path === '/' || path === undefined ? '/home' : path})
+        } else if (resp.data.code === 400) {
+          Message.error(resp.data.message)
         }
       })
     }

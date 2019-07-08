@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div v-loading="isUploadDisabled"
+       element-loading-text="图片上传中"
+       element-loading-spinner="el-icon-loading">
     <div class="model" v-show="model" @click="model = false">
       <div class="model-show">
         <img :src="modelSrc" alt="">
@@ -76,6 +78,7 @@ export default {
   props: ['apitype'],
   data () {
     return {
+      isUploadDisabled: false,
       APITYPE: 'carousel',
       respUrl: '',
       styles: {
@@ -99,8 +102,10 @@ export default {
         original: false,
         canMoveBox: true,
         autoCrop: true,
-        autoCropWidth: 200,
-        autoCropHeight: 150,
+        // autoCropWidth: 200,
+        // autoCropHeight: 150,
+        autoCropWidth: 580,
+        autoCropHeight: 360,
         centerBox: true,
         high: true
       },
@@ -125,6 +130,7 @@ export default {
       this.$refs.cropper.rotateRight()
     },
     tryUpload () {
+      this.isUploadDisabled = true
       var formData = new FormData()
       // let name = Math.floor(Math.random() * 1000000)
       this.filesss = this.$refs.cropper.getCropBlob(data => {
@@ -143,12 +149,17 @@ export default {
         console.log(this.APITYPE)
         this.$axios.post(url, formData, config)
           .then(resp => {
-            this.respUrl = resp.data.data
-            Message.success('上传成功')
-            console.log(this.respUrl)
+            if (resp.data.code === 200) {
+              this.respUrl = resp.data.data
+              Message.success('上传成功')
+              // console.log(this.respUrl)
+            } else if (resp.data.code === 400) {
+              Message.error(resp.data.message)
+            }
+            this.isUploadDisabled = false
           }).catch(err => {
             Message.error(err)
-            console.log(err)
+            this.isUploadDisabled = false
           })
       })
       console.log(this.filesss)

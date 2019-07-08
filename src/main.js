@@ -18,7 +18,6 @@ router.beforeEach((to, from, next) => {
     return
   }
   var name = store.state.info.name
-  console.log('name是' + name)
   if (name === undefined || name === '' || name === null) {
     next({path: '/', query: {redirect: to.path}})
     // if (to.meta.requireAuth || to.name == null) {

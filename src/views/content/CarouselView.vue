@@ -1,13 +1,20 @@
 <template>
-    <div>
-      <div class="block" >
-        <h2 style="text-align: center">轮播图预览（点击图片删除轮播图）</h2>
-        <el-carousel trigger="click" height="300px" >
-          <el-carousel-item v-for="item in urlObjs" :key="item.id">
-            <el-image :src="item.content" fit="fit" @click="popup(item.id)"></el-image>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
+    <el-row style="justify-content: center">
+      <el-col :span="1"></el-col>
+      <el-col :span="23" >
+        <div class="block">
+          <h2>轮播图预览（点击图片删除轮播图）</h2>
+          <el-carousel trigger="click" height="300px" style="width: 580px;height: 360px;margin: 0 auto;">
+            <el-carousel-item v-for="item in urlObjs" :key="item.id">
+              <el-image :src="item.content" fit="fill" @click="popup(item.id)">
+                <div slot="error" class="image-slot">
+                  <i class="el-icon-picture-outline" style=""></i>
+                </div>
+              </el-image>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </el-col>
       <el-dialog
         title="删除确认"
         :visible.sync="dialogVisible"
@@ -18,7 +25,7 @@
           <el-button type="primary" @click="handleDelete">确 定</el-button>
         </span>
       </el-dialog>
-    </div>
+    </el-row>
 </template>
 
 <script>

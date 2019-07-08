@@ -212,16 +212,17 @@ export default {
         page: this.page.currentPage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
     },
     prevClick () {
       this.loading = true
@@ -229,16 +230,17 @@ export default {
         page: this.page.prePage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
     },
     nextClick () {
       this.loading = true
@@ -246,17 +248,18 @@ export default {
         page: this.page.nextPage,
         size: this.page.PAGE_SIZE
       }).then(resp => {
+        this.loading = false
         this.tableData = resp.data.data.list
         this.page.nextPage = resp.data.data.nextPage
         this.page.prePage = resp.data.data.prePage
         this.page.pageNum = resp.data.data.pages
         console.log(this.tableData)
       }).catch(() => {
+        this.loading = false
         Message.error({
           message: '失败'
         })
       })
-      this.loading = false
     }
   }
 }

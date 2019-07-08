@@ -36,7 +36,11 @@
             <el-image
               :src="avatar"
               style="width: 100px; height: 100px"
-              fit="fit"></el-image>
+              fit="fit">
+              <div slot="error" class="image-slot">
+                <i class="el-icon-picture-outline" style="margin: auto;padding: 178px 0"></i>
+              </div>
+            </el-image>
             </div>
         </div>
         <br/>

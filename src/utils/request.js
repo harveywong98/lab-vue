@@ -29,9 +29,9 @@ request.interceptors.response.use(data => {
     Message.error({message: data.data.message})
     return
   }
-  if (data.data.message) {
-    Message.success({message: data.data.message})
-  }
+  // if (data.data.message) {
+  //   Message.success({message: data.data.message})
+  // }
   return data
 }, err => {
   if (err.response.status === 504 || err.response.status === 404) {
