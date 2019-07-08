@@ -86,7 +86,7 @@ export default {
         nextPage: 0,
         lastPage: 0,
         pageNum: 0,
-        PAGE_SIZE: 2,
+        PAGE_SIZE: 10,
         currentPage: 0
       },
       name: '公示公告',

@@ -1,6 +1,7 @@
 <template>
   <div v-loading="isUploading"
-       element-loading-text="文章发布中"
+       fullscreen
+       element-loading-text="请稍等"
        element-loading-spinner="el-icon-loading">
     <tiny-m-c-e ref="input" :getted_html="getted_html" v-if="isShow"></tiny-m-c-e>
     <br/>
@@ -44,15 +45,18 @@ export default {
   },
   methods: {
     editOne () {
+      this.isUploading = true
       let _this = this
       getOne({
         type: _this.requestInfo.type
       }).then(resp => {
+        this.isUploading = false
         let Base64 = base64.Base64
         this.getted_html = Base64.decode(resp.data.data.content)
         this.values = resp.data.data
         console.log(this.values)
       }).catch((error) => {
+        this.isUploading = false
         Message.error({
           message: error
         })

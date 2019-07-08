@@ -18,7 +18,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="176px" class="home-aside" style="overflow:auto;overflow-x: hidden;display: flex;justify-content: flex-start;text-align: left;height: 100%">
+        <el-aside class="home-aside" style="width:176px;overflow:auto;overflow-x: hidden;display: flex;justify-content: flex-start;text-align: left;height: 100%">
 <!--          <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;height: 100%">-->
             <el-scrollbar>
               <el-menu
@@ -88,8 +88,6 @@
               <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
               <el-breadcrumb-item v-text="this.$router.currentRoute.name"></el-breadcrumb-item>
             </el-breadcrumb>
-  <!--          <transition name="fade">-->
-  <!--          </transition>-->
             <router-view></router-view>
             <!--          <keep-alive>-->
             <!--            <router-view v-if="this.$route.meta.keepAlive"></router-view>-->
@@ -259,11 +257,4 @@ export default {
     min-width: 175px;
   }
 
-  /*.fade-enter, .fade-leave {*/
-  /*  transition: opacity 500ms;*/
-  /*}*/
-
-  /*.fade-enter, .fade-leave {*/
-  /*  opacity: 0;*/
-  /*}*/
 </style>
