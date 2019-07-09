@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row type="flex" justify="end">
-      <el-col :span="2">
+      <el-col :span="2.5">
         <div class="grid-content bg-purple">
           <el-button icon='el-icon-plus' size="small" @click="handleClick($event)" button_type="发布">发布规章制度</el-button>
         </div>

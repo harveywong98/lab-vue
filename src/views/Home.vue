@@ -19,7 +19,7 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside class="home-aside" style="width:176px;overflow:auto;overflow-x: hidden;display: flex;justify-content: flex-start;text-align: left;height: 100%">
+        <el-aside class="home-aside" style="width:180px;overflow:auto;overflow-x: hidden;display: flex;justify-content: flex-start;text-align: left;height: 100%">
 <!--          <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;height: 100%">-->
             <el-scrollbar>
               <el-menu
@@ -73,7 +73,7 @@
                 <el-submenu index="/home/carousel/view">
                   <template slot="title"><i class="el-icon-picture-outline-round"></i>轮播图管理</template>
                   <el-menu-item index="/home/carousel/view">
-                    <span slot="title">轮播图浏览和删除</span>
+                    <span slot="title" >轮播图浏览和删除</span>
                   </el-menu-item>
                   <el-menu-item index="/home/carousel/upload">
                     <span slot="title">轮播图上传</span>
