@@ -29,7 +29,7 @@ export default {
         language_url: '/static/tinymce/zh_CN.js',
         language: 'zh_CN',
         skin_url: '/static/tinymce/skins/ui/oxide',
-        height: 750,
+        height: 450,
         plugins: 'preview lists image media table wordcount autoresize',
         content_style: `
             *                         { padding:0; margin:0; }

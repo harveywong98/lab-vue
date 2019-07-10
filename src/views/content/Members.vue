@@ -156,6 +156,7 @@ export default {
     },
     editOne (id, event) {
       this.clicked_button_type = event.currentTarget.getAttribute('button_type')
+      console.log(this.clicked_button_type)
       this.editing_id = id
       queryOne({
         id: id

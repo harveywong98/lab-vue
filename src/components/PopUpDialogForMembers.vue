@@ -98,7 +98,14 @@ export default {
     closeAndRequest () {
       let richText = this.$refs.input
       let cropper = this.$refs.mycropper
-      this.$emit('on-request', this.memberName, this.rank, richText.tinymceHtml, cropper.respUrl)
+      let avatar = ''
+      // 修复出现不点击裁剪框就不能上传的问题
+      if (cropper === undefined) {
+        avatar = this.getted_avatar
+      } else {
+        avatar = cropper.respUrl
+      }
+      this.$emit('on-request', this.memberName, this.rank, richText.tinymceHtml, avatar)
     },
     imgUrlChanged (url) {
       this.avatar = url
