@@ -8,13 +8,13 @@
 <script>
 import SinglePageManagement from '@/components/SinglePageManagement'
 export default {
-  name: 'Thesis',
+  name: 'SocialWork',
   components: {SinglePageManagement},
   data () {
     return {
       requestInfo: {
-        type: 'paper',
-        name: '论文专著'
+        type: 'social_work',
+        name: '社会服务'
       }
     }
   }

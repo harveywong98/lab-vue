@@ -16,11 +16,10 @@ export function updateOne (data) {
   })
 }
 
-export function getCarousel (params) {
+export function getCarousel () {
   return request({
     url: '/image/for',
-    method: 'get',
-    params: params
+    method: 'get'
   })
 }
 
@@ -29,5 +28,13 @@ export function deleteCarousel (params) {
     url: '/image/for',
     method: 'delete',
     params: params
+  })
+}
+
+export function updateCarouselDescription (data) {
+  return request({
+    url: '/image/for',
+    method: 'put',
+    data: data
   })
 }

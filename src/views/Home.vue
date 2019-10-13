@@ -38,6 +38,10 @@
                   <i class="el-icon-document"></i>
                   <span slot="title">规章制度</span>
                 </el-menu-item>
+                <el-menu-item index="/home/specification">
+                  <i class="el-icon-reading"></i>
+                  <span slot="title">标准规范</span>
+                </el-menu-item>
                 <el-menu-item index="/home/members">
                   <i class="el-icon-user"></i>
                   <span slot="title">团队成员</span>
@@ -68,8 +72,12 @@
                 </el-menu-item>
                 <el-menu-item index="/home/thesis">
                   <i class="el-icon-notebook-1"></i>
-                  <span slot="title">论文巨著</span>
+                  <span slot="title">论文专著</span>
                 </el-menu-item>
+                <el-menu-item index="/home/socialworks">
+                <i class="el-icon-service"></i>
+                <span slot="title">社会服务</span>
+              </el-menu-item>
                 <el-submenu index="/home/carousel/view">
                   <template slot="title"><i class="el-icon-picture-outline-round"></i>轮播图管理</template>
                   <el-menu-item index="/home/carousel/view">

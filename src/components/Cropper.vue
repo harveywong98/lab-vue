@@ -8,6 +8,15 @@
       </div>
     </div>
     <div>
+      <el-input v-if="this.APITYPE !== 'avatar'"
+                v-model="imgName"
+                placeholder="请输入轮播图名称"
+                maxlength="30"
+                style="width: 70%"
+                show-word-limit></el-input>
+    </div>
+    <br>
+    <div>
       <label class="btn" for="uploads">选择图片</label>
       <input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);" accept="image/png, image/jpeg, image/gif, image/jpg"
              @change="uploadImg($event, 1)">
@@ -78,6 +87,7 @@ export default {
   props: ['apitype'],
   data () {
     return {
+      imgName: '',
       isUploadDisabled: false,
       APITYPE: 'carousel',
       respUrl: '',
@@ -142,7 +152,7 @@ export default {
             'Authorization': getCookie('USER_TOKEN')
           }
         }
-        let url = process.env.BASE_API + '/image/for'
+        let url = process.env.BASE_API + '/image/for' + '?content=' + this.imgName
         if (this.APITYPE === 'avatar') {
           url = process.env.BASE_API + '/image'
         }

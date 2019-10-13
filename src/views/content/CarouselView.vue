@@ -4,15 +4,19 @@
       <el-col :span="23" >
         <div class="block">
           <h2>轮播图预览（点击图片删除轮播图）</h2>
-          <el-carousel trigger="click" height="300px" style="width: 580px;height: 360px;margin: 0 auto;">
-            <el-carousel-item v-for="item in urlObjs" :key="item.id">
-              <el-image :src="item.content" fit="fill" @click="popup(item.id)">
+          <el-carousel ref="carousel" trigger="click" height="300px" style="width: 580px;height: 360px;margin: 0 auto;" @change="handleChange">
+            <el-carousel-item v-for="item in urlObjs" :key="item.id" v-model="picName">
+              <el-image :src="item.image" fit="fill" @click="popup(item.id)">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline" style=""></i>
                 </div>
               </el-image>
             </el-carousel-item>
           </el-carousel>
+          <el-row>
+            <el-input v-model="picName" placeholder="请输入内容" style="width: 45%"></el-input>
+            <el-button @click="handleUpdateDescription">更新描述</el-button>
+          </el-row>
         </div>
       </el-col>
       <el-dialog
@@ -30,10 +34,12 @@
 
 <script>
 import {Message} from 'element-ui'
-import {getCarousel, deleteCarousel} from '../../api/singlePage'
+import {getCarousel, deleteCarousel, updateCarouselDescription} from '../../api/singlePage'
 export default {
   data () {
     return {
+      picName: '',
+      picId: '',
       clickedId: 0,
       type: 'image',
       urlObjs: [],
@@ -44,13 +50,27 @@ export default {
     }
   },
   created () {
-    getCarousel({
-      type: this.type
-    }).then(resp => {
+    getCarousel({}).then(resp => {
       this.urlObjs = resp.data.data
     })
   },
   methods: {
+    handleUpdateDescription () {
+      updateCarouselDescription({
+        id: this.picId,
+        content: this.picName
+      }).then(resp => {
+        getCarousel({}).then(resp => {
+          this.urlObjs = resp.data.data
+        })
+      })
+    },
+    handleChange () {
+      let activeIndex = this.$refs.carousel.activeIndex
+      let item = this.urlObjs[activeIndex]
+      this.picName = item.content
+      this.picId = item.id
+    },
     popup (id) {
       this.clickedId = id
       this.dialogVisible = true

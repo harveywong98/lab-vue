@@ -13,6 +13,8 @@ import Reward from '@/views/content/Reward'
 import Patent from '@/views/content/Patent'
 import Thesis from '@/views/content/Thesis'
 import Project from '@/views/content/Project'
+import Specification from '@/views/content/Specification'
+import SocialWork from '@/views/content/SocialWork'
 import CarouselView from '@/views/content/CarouselView'
 import CarouselUpload from '@/views/content/CarouselUpload'
 
@@ -48,6 +50,10 @@ export default new Router({
           name: '规章制度',
           component: Regulations
         }, {
+          path: 'specification',
+          name: '标准规范',
+          component: Specification
+        }, {
           path: 'cultivation',
           name: '学生培养',
           component: Cultivation
@@ -77,8 +83,12 @@ export default new Router({
           component: Patent
         }, {
           path: 'thesis',
-          name: '论文巨著',
+          name: '论文专著',
           component: Thesis
+        }, {
+          path: 'socialworks',
+          name: '社会服务',
+          component: SocialWork
         }, {
           path: 'carousel/view',
           name: '轮播图浏览和删除',
